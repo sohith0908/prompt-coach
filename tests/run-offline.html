@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Prompt Coach offline score</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; background: #f8fafc; color: #0f172a; }
+      h1 { margin: 0 0 8px; font-size: 20px; }
+      .meta { color: #64748b; margin-bottom: 16px; }
+      .card { background: #fff; border: 1px solid #dbe3ee; border-radius: 10px; padding: 12px; margin: 10px 0; }
+      .ok { border-left: 4px solid #10b981; }
+      .bad { border-left: 4px solid #ef4444; }
+      pre { white-space: pre-wrap; background: #0f172a; color: #e2e8f0; padding: 10px; border-radius: 8px; font-size: 11px; max-height: 180px; overflow: auto; }
+      code { background: #e2e8f0; padding: 1px 5px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Offline coach fixture run</h1>
+    <p class="meta" id="summary">Running…</p>
+    <div id="out"></div>
+    <script type="module">
+      import { coachOffline } from "../lib/coach-engine.js";
+      const fixtures = await fetch("./fixtures.json").then((r) => r.json());
+      const out = document.getElementById("out");
+      let pass = 0;
+      for (const f of fixtures) {
+        const r = coachOffline(f.input, "", f.shape || "auto");
+        const checks = [];
+        if (r.understood?.startsWith("You want")) checks.push("understood");
+        if (r.prompt && r.prompt.length > 80) checks.push("prompt");
+        if ((r.tweaks || []).length >= 2) checks.push("tweaks");
+        if (r.target) checks.push("target");
+        const homework = /homework|assignment|quiz/i.test(f.input);
+        if (homework && /learn|teach|practice|not.*submission|guide/i.test(r.prompt + r.corrected_request)) {
+          checks.push("homework-safe");
+        }
+        const ok = checks.includes("understood") && checks.includes("prompt") && checks.includes("tweaks");
+        if (ok) pass += 1;
+        const card = document.createElement("div");
+        card.className = `card ${ok ? "ok" : "bad"}`;
+        card.innerHTML = `
+          <div><strong>#${f.id}</strong> <code>${f.shape}</code></div>
+          <div>${f.input}</div>
+          <div>checks: ${checks.join(", ") || "none"} · ${r.prompt.split(/\s+/).length} words</div>
+          <pre>${r.prompt.slice(0, 900)}</pre>
+        `;
+        out.appendChild(card);
+      }
+      document.getElementById("summary").textContent =
+        `${pass}/${fixtures.length} fixtures produced a usable detailed local prompt.`;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+dist/
+safari/
+*.xcodeproj/
+
+# Local / legacy (not shipped)
+popup/
+preview.html
+preview.js
+content/panel.js
+__pycache__/
+*.pyc
+.venv/

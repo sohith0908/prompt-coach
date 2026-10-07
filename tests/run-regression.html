@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Prompt Coach regression</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; background: #f8fafc; color: #0f172a; }
+      h1 { margin: 0 0 8px; font-size: 20px; }
+      .meta { color: #64748b; margin-bottom: 16px; }
+      .card { background: #fff; border: 1px solid #dbe3ee; border-radius: 10px; padding: 12px; margin: 10px 0; }
+      .ok { border-left: 4px solid #10b981; }
+      .bad { border-left: 4px solid #ef4444; }
+      pre { white-space: pre-wrap; background: #0f172a; color: #e2e8f0; padding: 10px; border-radius: 8px; font-size: 11px; max-height: 220px; overflow: auto; }
+      code { background: #e2e8f0; padding: 1px 5px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Regression suite</h1>
+    <p class="meta" id="summary">Running…</p>
+    <div id="out"></div>
+    <script type="module">
+      import { coachOffline } from "../lib/coach-engine.js";
+      const cases = await fetch("./regression.json").then((r) => r.json());
+      const out = document.getElementById("out");
+      let pass = 0;
+      for (const c of cases) {
+        const r = coachOffline(c.input, "", "auto");
+        const blob = `${r.prompt}\n${r.corrected_request}\n${(r.fill_hints || []).join("\n")}`;
+        const missing = (c.must_include || []).filter(
+          (w) => !blob.toLowerCase().includes(String(w).toLowerCase())
+        );
+        const leaked = (c.must_exclude || []).filter((w) =>
+          blob.toLowerCase().includes(String(w).toLowerCase())
+        );
+        const scenarioOk =
+          !c.scenario ||
+          (r.slots && r.slots.scenario === c.scenario);
+        const ok = missing.length === 0 && leaked.length === 0 && scenarioOk;
+        if (ok) pass += 1;
+        const card = document.createElement("div");
+        card.className = `card ${ok ? "ok" : "bad"}`;
+        card.innerHTML = `
+          <div><strong>${c.id}</strong> · scenario <code>${r.slots?.scenario || "?"}</code> · expected <code>${c.scenario || "-"}</code>${scenarioOk ? "" : " · SCENARIO MISMATCH"}</div>
+          <div>${c.input}</div>
+          <div>missing: ${missing.join(", ") || "none"} · leaked: ${leaked.join(", ") || "none"} · notice: ${r.notice || "—"}</div>
+          <pre>${(r.prompt || "").slice(0, 1400)}</pre>
+        `;
+        out.appendChild(card);
+      }
+      document.getElementById("summary").textContent = `${pass}/${cases.length} regression cases passed.`;
+    </script>
+  </body>
+</html>

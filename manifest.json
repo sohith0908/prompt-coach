@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "Prompt Coach",
+  "version": "1.6.0",
+  "description": "Turn a messy idea into a detailed, copy-ready AI prompt. Chrome, Edge, Brave, Opera, Firefox, and more.",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": ["storage", "activeTab", "contextMenus", "scripting"],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*",
+    "https://api.groq.com/*"
+  ],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Toggle Prompt Coach",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Toggle Prompt Coach"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/mount.js",
+        "content/panel.css",
+        "content/panel-app.js",
+        "pages/blocked.html",
+        "pages/blocked.js",
+        "pages/blocked.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

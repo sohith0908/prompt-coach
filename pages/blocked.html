@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prompt Coach — page blocked</title>
+    <link rel="stylesheet" href="blocked.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Can't open here</h1>
+      <p id="reason">This page blocks extensions.</p>
+      <p>
+        Prompt Coach can't inject into browser system pages
+        (<code>chrome://</code>, <code>edge://</code>, <code>brave://</code>,
+        <code>about:</code>, extension stores, etc.).
+      </p>
+      <p>
+        Switch to a normal site like YouTube, ChatGPT, or Claude, then click the
+        Prompt Coach icon again. Works in Chrome, Edge, Brave, Opera, Firefox, and other Chromium browsers.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="https://www.youtube.com" target="_blank" rel="noreferrer">Open YouTube</a>
+        <button type="button" id="close">Close this tab</button>
+      </div>
+    </main>
+    <script src="blocked.js"></script>
+  </body>
+</html>

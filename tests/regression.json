@@ -1,0 +1,114 @@
+[
+  {
+    "id": "landlord-heater",
+    "input": "make ai write mail to landlord heater broken 3 weeks he ignore me firm not rude",
+    "must_include": ["landlord", "heater", "Situation:"],
+    "must_exclude": ["[current deadline]", "[requested date]", "[manager name]", "my boss"],
+    "scenario": "complaint"
+  },
+  {
+    "id": "boss-deadline",
+    "input": "make ai write mail boss angry but polite deadline",
+    "must_include": ["boss", "deadline", "Situation:"],
+    "must_exclude": ["landlord", "heater"],
+    "scenario": "deadline"
+  },
+  {
+    "id": "manager-late",
+    "input": "i need email to manager saying project late but not my fault",
+    "must_include": ["manager", "Situation:"],
+    "must_exclude": ["landlord", "heater"],
+    "scenario": "request"
+  },
+  {
+    "id": "client-apology",
+    "input": "mail client sorry shipment delayed 3 days",
+    "must_include": ["client", "Situation:", "3 days"],
+    "must_exclude": ["landlord", "heater", "[current deadline]", "my boss"],
+    "scenario": "apology"
+  },
+  {
+    "id": "resume-data",
+    "input": "make resume better data job i know python sql",
+    "must_include": ["resume", "python", "sql", "Situation:"],
+    "must_exclude": ["landlord", "[current deadline]", "heater", "my boss"],
+    "scenario": "resume"
+  },
+  {
+    "id": "teacher-extension",
+    "input": "write email to teacher ask extension on assignment polite",
+    "must_include": ["teacher", "Situation:", "extension"],
+    "must_exclude": ["landlord", "heater", "my boss", "[manager name]"],
+    "scenario": "assignment_extension"
+  },
+  {
+    "id": "support-followup",
+    "input": "email customer support still waiting refund 2 weeks firm not rude",
+    "must_include": ["support", "Situation:", "2 weeks"],
+    "must_exclude": ["landlord", "heater", "my boss", "[current deadline]"],
+    "scenario": "follow_up"
+  },
+  {
+    "id": "code-python",
+    "input": "python function sort list of dicts by date key",
+    "must_include": ["python", "Situation:"],
+    "must_exclude": ["landlord", "[current deadline]", "my boss"],
+    "scenario": "code"
+  },
+  {
+    "id": "homework-safe",
+    "input": "do my homework essay on climate change 1000 words",
+    "must_include": ["learn", "Situation:"],
+    "must_exclude": ["submit as mine", "[current deadline]", "my boss"],
+    "scenario": "homework"
+  },
+  {
+    "id": "image-library",
+    "input": "draw a quiet library at night poster",
+    "must_include": ["library"],
+    "must_exclude": ["deadline", "boss", "landlord"],
+    "scenario": "image"
+  },
+  {
+    "id": "support-writing-not-desk",
+    "input": "i need support writing a blog about coffee",
+    "must_include": ["blog", "coffee", "Situation:"],
+    "must_exclude": ["customer support", "[support contact]", "ticket", "my boss"],
+    "scenario": "write"
+  },
+  {
+    "id": "customer-reply",
+    "input": "angry customer reply but keep brand polite",
+    "must_include": ["customer", "Situation:"],
+    "must_exclude": ["landlord", "[current deadline]", "my boss", "[manager name]"],
+    "scenario": "customer_reply"
+  },
+  {
+    "id": "whatsapp-roommate",
+    "input": "whatsapp message to roommate dishes piling up",
+    "must_include": ["roommate", "Situation:", "WhatsApp"],
+    "must_exclude": ["landlord", "[current deadline]", "my boss", "Subject:"],
+    "scenario": "request"
+  },
+  {
+    "id": "caption-reel",
+    "input": "bro write caption for travel reel goa vibes",
+    "must_include": ["goa", "Situation:"],
+    "must_exclude": ["landlord", "my boss", "[current deadline]"],
+    "scenario": "video"
+  },
+  {
+    "id": "lor-professor",
+    "input": "mail to professor request recommendation letter",
+    "must_include": ["recommendation", "Situation:"],
+    "must_exclude": ["heater", "[current deadline]", "my boss"],
+    "scenario": "lor"
+  },
+  {
+    "id": "translate-hindi",
+    "input": "translate this to hindi politely",
+    "must_include": ["Situation:", "translat"],
+    "must_exclude": ["landlord", "my boss", "[current deadline]"],
+    "scenario": "translate"
+  }
+]
